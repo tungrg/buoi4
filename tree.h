@@ -19,7 +19,7 @@ typedef struct data
 {
     char id[10];
     char name[30];
-    int sales;
+    float sales;
 } Data;
 typedef struct str_tree_node* child;
 struct str_tree_node
@@ -33,6 +33,9 @@ typedef struct str_tree_node tree_node;
 
 
 tree_node* create_node(const Data data);
+void add_node(tree_node** root, tree_node* agg);
+tree_node* find_node_by_id(tree_node* node, char id[]);
+float calculate_income(tree_node* node);
 void clear_tree(tree_node **root);
 void in_order(tree_node * const root);
 void pre_order(tree_node * const root);

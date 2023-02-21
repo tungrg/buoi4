@@ -6,19 +6,40 @@
 //  Copyright © 2020 macOne. All rights reserved.
 //
 
-#include <stdio.h>
 #include "tree.h"
+#include "menu.h"
 
 tree_node* build_test_tree(void);
 
 int main(int argc, const char * argv[])
 {
-    tree_node *root = build_test_tree();
-    
-    printf("In-order :  ");  in_order(root);   printf("\n");
-    printf("Pre-order:  ");  pre_order(root);  printf("\n");
-    printf("Post-order: ");  post_order(root); printf("\n");
-    
+    Data zero = { .id = "0", .name = "congty", .sales = 0 };
+    //tree_node* a = create_node(temp);
+    //tree_node *root = build_test_tree();
+
+    //tree_node* root = NULL; if u want to add from begining
+
+    tree_node* root = create_node(zero);
+    //printf("In-order :  ");  in_order(root);   printf("\n");
+    //printf("Pre-order:  ");  pre_order(root);  printf("\n");
+    //printf("Post-order: ");  post_order(root); printf("\n");
+    int lenh;
+    do {
+        print_menu_main(&lenh);
+        switch (lenh)
+        {
+        case 1:
+            print_menu_add(&root);
+            break;
+        case 2:
+            print_menu_calculate_income(root);
+            break;
+        case 3:
+            print_menu_show_list(root);
+            break;
+        }
+    } while (lenh != 4);
+
     clear_tree(&root);
     return 0;
 }
@@ -29,7 +50,7 @@ tree_node* build_test_tree(void)
     Data temp = { .id = "123", .name = "1st", .sales = 0 };
     tree_node* a = create_node(temp);
 
-    tree_node* b = create_node('b');
+    /*tree_node* b = create_node('b');
     tree_node* c = create_node('c');
     tree_node* d = create_node('d');
     tree_node* e = create_node('e');
@@ -50,7 +71,7 @@ tree_node* build_test_tree(void)
     d->children[0] = g; d->children[1] = h; d->children[2] = i;
     e->children[0] = j; e->children[1] = k;
     g->children[0] = l; g->children[1] = m;
-    k->children[0] = n; k->children[1] = o; k->children[2] = p;
+    k->children[0] = n; k->children[1] = o; k->children[2] = p;*/
     
     return a;
 }

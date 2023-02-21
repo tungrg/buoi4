@@ -19,6 +19,50 @@ tree_node* create_node(const Data data)
     return n;
 }
 
+void add_node(tree_node** root, tree_node* agg) {
+    if (*root == NULL) {
+        *root = agg;
+        return;
+    }
+    for (int i = 0; i < MAX_CHILDREN; i++) {
+        if ((*root)->children[i] == NULL) {
+            (*root)->children[i] = agg;
+            break;
+        }
+    }
+}
+
+tree_node* find_node_by_id(tree_node* node, char id[]) {
+    if (node == NULL) {
+        return NULL;
+    }
+    if (strcmp(node->data.id, id) == 0) {
+        return node;
+    }
+    for (int i = 0; i < MAX_CHILDREN; i++) {
+        tree_node* child = node->children[i];
+        if (child != NULL) {
+            tree_node* res = find_node_by_id(child, id);
+            if (res != NULL) {
+                return res;
+            }
+        }
+    }
+    return NULL;
+}
+
+float calculate_income(tree_node* node) {
+    if (node == NULL) {
+        return 0;
+    }
+    float sub_sum = 0;
+    for (int i = 0; i < MAX_CHILDREN; i++) {
+        sub_sum += 0.3*calculate_income(node->children[i]);
+    }
+    return 0.7 * node->data.sales + sub_sum;
+}
+
+
 void clear_tree(tree_node **root)
 {
     // TODO
@@ -34,9 +78,10 @@ void clear_tree(tree_node **root)
 }
 
 void printfln_items(tree_node* const node) {
+    printf("----------------------\n");
     printf("Id: %s\n", node->data.id);
     printf("Name: %s\n", node->data.name);
-    printf("Sales: %d\n", node->data.sales);
+    printf("Sales: %.2f\n", node->data.sales);
 }
 
 void in_order(tree_node * const root)
